@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="users_hint_search">Search for user</string>
+    <string name="users_title">Users</string>
+</resources>
