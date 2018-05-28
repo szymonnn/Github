@@ -1,13 +1,13 @@
 package co.netguru.android.github.application
 
 import android.app.Activity
-import android.app.Application
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
 import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
 
-class App : Application(), HasActivityInjector {
+class App : DaggerApplication() {
 
     @Inject
     lateinit var debugMetricsHelper: DebugMetricsHelper
@@ -20,13 +20,10 @@ class App : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent
-                .builder()
-                .application(this)
-                .build()
-                .inject(this)
         RxJavaPlugins.setErrorHandler(rxJavaErrorHandler)
     }
+
+    override fun applicationInjector(): AndroidInjector<App> = DaggerApplicationComponent.builder().create(this)
 
     override fun activityInjector() = activityDispatchingAndroidInjector
 }
