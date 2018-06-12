@@ -12,10 +12,10 @@ import kotlinx.android.synthetic.main.activity_users.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class UsersActivity : MvpActivity<UsersView, UsersPresenter>(), UsersView {
+class UsersActivity : MvpActivity<UsersContract.View, UsersContract.Presenter>(), UsersContract.View {
 
     @Inject
-    lateinit var usersPresenter: UsersPresenter
+    lateinit var usersPresenter: UsersContract.Presenter
 
     private lateinit var usersAdapter: UsersAdapter
 
@@ -27,19 +27,10 @@ class UsersActivity : MvpActivity<UsersView, UsersPresenter>(), UsersView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_users)
+        super.onCreate(savedInstanceState)
         supportActionBar?.title = getString(R.string.users_title)
-        setupSearch()
         setupAdapter()
-    }
-
-    private fun setupSearch() {
-        RxTextView.afterTextChangeEvents(searchEditText)
-                .map { it.editable().toString() }
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .filter { !it.isEmpty() }
-                .subscribe { presenter.onSearch(it) }
     }
 
     private fun setupAdapter() {
@@ -48,9 +39,16 @@ class UsersActivity : MvpActivity<UsersView, UsersPresenter>(), UsersView {
         recyclerView.adapter = usersAdapter
     }
 
+    override fun searchText() = RxTextView.afterTextChangeEvents(searchEditText)
+            .map { it.editable().toString() }
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .filter {
+                !it.isEmpty()
+            }
+
     override fun onSearchComplete() {
         usersAdapter.notifyDataSetChanged()
     }
 
-    override fun createPresenter(): UsersPresenter = usersPresenter
+    override fun createPresenter(): UsersContract.Presenter = usersPresenter
 }

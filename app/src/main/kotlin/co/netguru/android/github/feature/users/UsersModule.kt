@@ -8,5 +8,5 @@ import dagger.Provides
 class UsersModule {
 
     @Provides
-    fun providePresenter(usersApi: UsersApi) = UsersPresenter(usersApi)
+    fun providePresenter(usersApi: UsersApi): UsersContract.Presenter = UsersPresenter(usersApi)
 }

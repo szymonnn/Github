@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import co.netguru.android.github.R
 
-class UsersAdapter(private val presenter: UsersPresenter) : RecyclerView.Adapter<UserViewHolder>() {
+class UsersAdapter(private val presenter: UsersContract.Presenter) : RecyclerView.Adapter<UserViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
         return UserViewHolder(view)

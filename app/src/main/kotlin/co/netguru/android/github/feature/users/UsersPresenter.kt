@@ -7,11 +7,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_user.view.*
 
-class UsersPresenter(val usersApi: UsersApi) : MvpBasePresenter<UsersView>() {
+class UsersPresenter(val usersApi: UsersApi) : MvpBasePresenter<UsersContract.View>(), UsersContract.Presenter {
 
     private var users: List<User> = listOf()
 
-    fun onSearch(query: String) {
+    override fun attachView(view: UsersContract.View) {
+        super.attachView(view)
+        view.searchText().subscribe { onSearch(it) }
+    }
+
+    private fun onSearch(query: String) {
         usersApi.searchUsers(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -25,11 +30,11 @@ class UsersPresenter(val usersApi: UsersApi) : MvpBasePresenter<UsersView>() {
                 })
     }
 
-    fun usersCount(): Int {
+    override fun usersCount(): Int {
         return users.size
     }
 
-    fun bindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun bindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
         holder.itemView.userNameTextView.text = user.login
     }
