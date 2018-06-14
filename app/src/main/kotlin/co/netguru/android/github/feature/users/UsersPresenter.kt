@@ -17,6 +17,9 @@ class UsersPresenter(val usersApi: UsersApi) : MvpBasePresenter<UsersContract.Vi
                         onNext = { onSearch(it) },
                         onError = { it.printStackTrace() }
                 )
+        view.itemClick().subscribeBy {
+            view.gotoUserDetails(it)
+        }
     }
 
     private fun onSearch(query: String) {
