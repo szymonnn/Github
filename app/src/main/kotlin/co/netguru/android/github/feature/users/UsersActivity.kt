@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import co.netguru.android.github.R
+import co.netguru.android.github.data.model.PagedResponse
+import co.netguru.android.github.data.model.User
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_users.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class UsersActivity : MvpActivity<UsersContract.View, UsersContract.Presenter>(), UsersContract.View {
@@ -34,20 +35,16 @@ class UsersActivity : MvpActivity<UsersContract.View, UsersContract.Presenter>()
     }
 
     private fun setupAdapter() {
-        usersAdapter = UsersAdapter(presenter)
+        usersAdapter = UsersAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = usersAdapter
     }
 
     override fun searchText() = RxTextView.afterTextChangeEvents(searchEditText)
             .map { it.editable().toString() }
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .filter {
-                !it.isEmpty()
-            }
 
-    override fun onSearchComplete() {
-        usersAdapter.notifyDataSetChanged()
+    override fun onSearchComplete(users: PagedResponse<User>) {
+        usersAdapter.setItems(users.items)
     }
 
     override fun createPresenter(): UsersContract.Presenter = usersPresenter
