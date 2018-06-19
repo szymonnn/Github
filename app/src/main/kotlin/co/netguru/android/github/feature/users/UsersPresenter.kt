@@ -1,5 +1,6 @@
 package co.netguru.android.github.feature.users
 
+import co.netguru.android.github.R
 import co.netguru.android.github.data.api.UsersApi
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,25 +14,33 @@ class UsersPresenter(val usersApi: UsersApi) : MvpBasePresenter<UsersContract.Vi
         super.attachView(view)
         view.searchText()
                 .debounce(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = { onSearch(it) },
                         onError = { it.printStackTrace() }
                 )
-        view.itemClick().subscribeBy {
-            view.gotoUserDetails(it)
-        }
+        view.itemClick().subscribe { user -> ifViewAttached { view -> view.gotoUserDetails(user) } }
     }
 
     private fun onSearch(query: String) {
+        if (query.isBlank()) {
+            ifViewAttached { it.showEmptyView(); }
+            return
+        }
+        ifViewAttached { it.progressBarVisibility(true) }
         usersApi.searchUsers(query)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ users ->
                     ifViewAttached { view ->
+                        view.progressBarVisibility(false)
                         view.onSearchComplete(users)
                     }
                 }, {
-                    it.printStackTrace()
+                    ifViewAttached { view ->
+                        view.progressBarVisibility(false)
+                        view.showMessage(R.string.err_default)
+                    }
                 })
     }
 

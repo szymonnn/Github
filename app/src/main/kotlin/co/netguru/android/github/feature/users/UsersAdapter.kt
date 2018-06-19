@@ -10,16 +10,18 @@ import io.reactivex.subjects.PublishSubject
 class UsersAdapter : RecyclerView.Adapter<UserViewHolder>() {
 
     private val users = mutableListOf<User>()
-    val itemClick = PublishSubject.create<User>()
+    var itemClick: PublishSubject<User>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
         return UserViewHolder(view)
     }
 
-    fun setItems(list: List<User>) {
+    fun setItems(list: List<User>?) {
         users.clear()
-        users.addAll(list)
+        if (list != null) {
+            users.addAll(list)
+        }
         notifyDataSetChanged()
     }
 

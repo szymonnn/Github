@@ -6,14 +6,13 @@ import co.netguru.android.github.data.model.User
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(user: User, subject: PublishSubject<User>) {
+    fun bind(user: User, subject: PublishSubject<User>?) {
         itemView.userNameTextView.text = user.login
         Glide.with(itemView).load(user.avatarUrl).into(itemView.avatarImageView)
-        RxView.clicks(itemView).subscribe { subject.onNext(user) }
+        RxView.clicks(itemView).subscribe { subject?.onNext(user) }
     }
 
 }

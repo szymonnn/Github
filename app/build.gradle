@@ -147,6 +147,7 @@ configurations {
 }
 
 dependencies {
+    def nav_version = "1.0.0-alpha02"
 
     //Kotlin
     implementation libs.kotlin
@@ -220,6 +221,12 @@ dependencies {
 
     //Glide
     implementation libs.glide
-    
-    
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+}
+repositories {
+    mavenCentral()
 }

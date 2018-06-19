@@ -26,6 +26,8 @@ class UsersPresenterTest {
 
     @Before
     fun setUp() {
+        whenever(view.itemClick()).thenReturn(Observable.just(Objects.USERS.items[0]))
+        whenever(view.searchText()).thenReturn(Observable.just(Objects.QUERY))
         rule = RxTestSchedulerOverrideRule()
         usersApi = mock()
         presenter = UsersPresenter(usersApi)
@@ -33,17 +35,22 @@ class UsersPresenterTest {
 
     @Test
     fun whenSearchUsers_thenReturnListOfUsers() {
-        whenever(view.searchText()).thenReturn(Observable.just(Objects.QUERY))
         whenever(usersApi.searchUsers(Objects.QUERY)).thenReturn(Observable.just(Objects.USERS))
         presenter.attachView(view)
         verify(view).onSearchComplete(Objects.USERS)
     }
 
     @Test
-    fun whenSearchWithEmptyQuery_thenReturnEmptyList() {
+    fun whenSearchWithEmptyQuery_thenShowEmptyView() {
         whenever(view.searchText()).thenReturn(Observable.just(Objects.EMPTY_QUERY))
-        whenever(usersApi.searchUsers(Objects.EMPTY_QUERY)).thenReturn(Observable.just(Objects.EMPTY_USERS))
         presenter.attachView(view)
-        verify(view).onSearchComplete(Objects.EMPTY_USERS)
+        verify(view).showEmptyView()
+    }
+
+    @Test
+    fun whenUserSelected_thenGoToUserDetails() {
+        whenever(usersApi.searchUsers(Objects.QUERY)).thenReturn(Observable.just(Objects.USERS))
+        presenter.attachView(view)
+        verify(view).gotoUserDetails(Objects.USERS.items[0])
     }
 }
