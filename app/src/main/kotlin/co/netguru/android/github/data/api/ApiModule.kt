@@ -3,6 +3,7 @@ package co.netguru.android.github.data.api
 import co.netguru.android.github.application.scope.AppScope
 import co.netguru.android.github.common.Constants
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -14,7 +15,7 @@ class ApiModule {
 
     @AppScope
     @Provides
-    fun provideGson() = Gson()
+    fun provideGson() = GsonBuilder().setDateFormat("yyyy-MM-dd'T'hh:mm:ssZ").create()
 
     @AppScope
     @Provides
