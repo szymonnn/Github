@@ -1,6 +1,7 @@
 package co.netguru.android.github.feature.users
 
 import co.netguru.android.github.Objects
+import co.netguru.android.github.R
 import co.netguru.android.github.RxTestSchedulerOverrideRule
 import co.netguru.android.github.data.api.UsersApi
 import com.nhaarman.mockito_kotlin.mock
@@ -38,6 +39,13 @@ class UsersPresenterTest {
         whenever(usersApi.searchUsers(Objects.QUERY)).thenReturn(Observable.just(Objects.USERS))
         presenter.attachView(view)
         verify(view).onSearchComplete(Objects.USERS)
+    }
+
+    @Test
+    fun whenSearchUsersError_thenShowMessage() {
+        whenever(usersApi.searchUsers(Objects.QUERY)).thenReturn(Observable.error(Exception("Server didn't respond")))
+        presenter.attachView(view)
+        verify(view).showMessage(R.string.err_default)
     }
 
     @Test

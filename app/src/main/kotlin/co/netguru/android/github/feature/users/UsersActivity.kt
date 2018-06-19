@@ -13,6 +13,7 @@ import co.netguru.android.github.feature.details.DetailsActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_users.*
 import javax.inject.Inject
 
 class UsersActivity : BaseActivity<UsersContract.View, UsersContract.Presenter>(), UsersContract.View {
