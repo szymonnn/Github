@@ -39,6 +39,9 @@ class DetailsActivity : BaseActivity<DetailsContract.View, DetailsContract.Prese
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_details)
         super.onCreate(savedInstanceState)
+        intent.extras?.let {
+            presenter.getData(intent.getStringExtra(EXTRA_USER_LOGIN))
+        }
         setupAdapter()
     }
 
@@ -51,15 +54,15 @@ class DetailsActivity : BaseActivity<DetailsContract.View, DetailsContract.Prese
 
     override fun provideLogin() = Observable.just(intent.getStringExtra(EXTRA_USER_LOGIN))
 
-    override fun onDataFetched(details: UserDetails?, repos: List<Repo>?) {
+    override fun onDataFetched(details: UserDetails, repos: List<Repo>) {
         divider.visibility = View.VISIBLE
-        Glide.with(this).load(details?.avatarUrl).into(avatarImageView)
-        loginTextView.text = details?.login
-        nameTextView.text = details?.name
-        typeTextView.text = getString(R.string.format_type, details?.type)
-        companyTextView.text = getString(R.string.format_company, details?.company)
-        websiteTextView.text = getString(R.string.format_website, details?.blog)
-        locationTextView.text = getString(R.string.format_location, details?.location)
+        Glide.with(this).load(details.avatarUrl).into(avatarImageView)
+        loginTextView.text = details.login
+        nameTextView.text = details.name
+        typeTextView.text = getString(R.string.format_type, details.type)
+        companyTextView.text = getString(R.string.format_company, details.company)
+        websiteTextView.text = getString(R.string.format_website, details.blog)
+        locationTextView.text = getString(R.string.format_location, details.location)
         repoAdapter.setItems(repos)
     }
 

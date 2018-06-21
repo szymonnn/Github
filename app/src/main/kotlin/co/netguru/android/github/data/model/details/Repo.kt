@@ -5,7 +5,7 @@ import java.util.*
 
 data class Repo(
         var name: String,
-        var language: String,
-        var watchers: Int,
-        @SerializedName("updated_at") var lastUpdated: Date
+        var language: String? = null,
+        var watchers: Int? = null,
+        @SerializedName("updated_at") var lastUpdated: Date? = null
 )

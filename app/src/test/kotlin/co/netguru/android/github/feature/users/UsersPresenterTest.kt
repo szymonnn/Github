@@ -1,9 +1,9 @@
 package co.netguru.android.github.feature.users
 
 import co.netguru.android.github.Objects
-import co.netguru.android.github.R
 import co.netguru.android.github.RxTestSchedulerOverrideRule
 import co.netguru.android.github.data.api.UsersApi
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -21,8 +21,11 @@ class UsersPresenterTest {
     @JvmField
     @Rule
     var rule = RxTestSchedulerOverrideRule()
+
     var view = mock<UsersContract.View>()
+
     var usersApi = mock<UsersApi>()
+
     var presenter = UsersPresenter(usersApi)
 
     @Before
@@ -45,7 +48,7 @@ class UsersPresenterTest {
     fun whenSearchUsersError_thenShowMessage() {
         whenever(usersApi.searchUsers(Objects.QUERY)).thenReturn(Observable.error(Exception("Server didn't respond")))
         presenter.attachView(view)
-        verify(view).showMessage(R.string.err_default)
+        verify(view).showMessage(any<Int>())
     }
 
     @Test

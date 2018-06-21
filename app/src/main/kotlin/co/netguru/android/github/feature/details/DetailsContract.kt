@@ -9,10 +9,11 @@ import io.reactivex.Observable
 interface DetailsContract {
     interface View : BaseView {
         fun provideLogin(): Observable<String>
-        fun onDataFetched(details: UserDetails?, repos: List<Repo>?)
+        fun onDataFetched(details: UserDetails, repos: List<Repo>)
     }
 
     interface Presenter : MvpPresenter<View> {
+        fun getData(login: String)
 
     }
 }
