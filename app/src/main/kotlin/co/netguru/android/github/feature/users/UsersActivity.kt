@@ -15,9 +15,6 @@ class UsersActivity : BaseActivity<UsersContract.View, UsersContract.Presenter>(
     @Inject
     lateinit var usersPresenter: UsersContract.Presenter
 
-    @Inject
-    lateinit var idlingResource: IdlingResource
-
     private lateinit var usersAdapter: UsersAdapter
 
     val itemClick = PublishSubject.create<User>()
@@ -59,6 +56,7 @@ class UsersActivity : BaseActivity<UsersContract.View, UsersContract.Presenter>(
     }
 
     override fun progressBarVisibility(visible: Boolean) {
+        super.progressBarVisibility(visible)
         progressBar.visibility = if (visible) View.VISIBLE else View.INVISIBLE
     }
 

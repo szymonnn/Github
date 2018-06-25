@@ -1,7 +1,6 @@
 package co.netguru.android.github
 
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.IdlingRegistry
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers
@@ -26,7 +25,7 @@ class UsersListTest{
 
     @Test
     fun main() {
-        IdlingRegistry.getInstance().register(activityRule.activity.idlingResource)
+        //IdlingRegistry.getInstance().register(activityRule.activity.idlingResource)
         search()
         checkProgressBarVisible()
         checkRecyclerViewFill()
