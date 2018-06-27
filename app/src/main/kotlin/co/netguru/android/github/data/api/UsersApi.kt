@@ -5,6 +5,7 @@ import co.netguru.android.github.data.model.User
 import co.netguru.android.github.data.model.details.Repo
 import co.netguru.android.github.data.model.details.UserDetails
 import io.reactivex.Observable
+import kotlinx.coroutines.experimental.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,7 +13,7 @@ import retrofit2.http.Query
 interface UsersApi {
 
     @GET("search/users")
-    fun searchUsers(@Query("q") query: String): Observable<PagedResponse<User>>
+    fun searchUsers(@Query("q") query: String): Deferred<PagedResponse<User>>
 
     @GET("users/{login}")
     fun getUserDetails(@Path("login") login: String): Observable<UserDetails>
