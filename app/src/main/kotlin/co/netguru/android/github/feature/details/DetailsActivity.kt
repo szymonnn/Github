@@ -1,6 +1,11 @@
 package co.netguru.android.github.feature.details
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import co.netguru.android.github.R
 import co.netguru.android.github.data.model.User
 import co.netguru.android.github.data.model.details.Repo
 import co.netguru.android.github.data.model.details.UserDetails
@@ -9,6 +14,7 @@ import com.bumptech.glide.Glide
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_details.*
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity<DetailsContract.View, DetailsContract.Presenter>(), DetailsContract.View {
@@ -31,6 +37,7 @@ class DetailsActivity : BaseActivity<DetailsContract.View, DetailsContract.Prese
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
+
         setContentView(R.layout.activity_details)
         super.onCreate(savedInstanceState)
         intent.extras?.let {

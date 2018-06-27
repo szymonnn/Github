@@ -1,10 +1,12 @@
 package co.netguru.android.github.feature.users
 
+import co.netguru.android.github.R
 import co.netguru.android.github.data.api.UsersApi
 import co.netguru.android.github.feature.base.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class UsersPresenter(val usersApi: UsersApi) : BasePresenter<UsersContract.View>(), UsersContract.Presenter {
 

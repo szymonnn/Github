@@ -2,6 +2,7 @@ package co.netguru.android.github.feature.base
 
 import android.support.annotation.CallSuper
 import android.support.test.espresso.idling.CountingIdlingResource
+import android.widget.Toast
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView

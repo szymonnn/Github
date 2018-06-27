@@ -104,3 +104,6 @@
 
 #dagger
 -dontwarn com.google.errorprone.annotations.*
+
+#recyclerview
+-keepclasseswithmembers public class android.support.v7.widget.RecyclerView { *; }

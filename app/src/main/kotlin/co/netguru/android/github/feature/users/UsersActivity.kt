@@ -1,6 +1,11 @@
 package co.netguru.android.github.feature.users
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import co.netguru.android.github.R
 import co.netguru.android.github.data.model.PagedResponse
 import co.netguru.android.github.data.model.User
 import co.netguru.android.github.feature.base.BaseActivity
@@ -8,6 +13,7 @@ import co.netguru.android.github.feature.details.DetailsActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_users.*
 import javax.inject.Inject
 
 class UsersActivity : BaseActivity<UsersContract.View, UsersContract.Presenter>(), UsersContract.View {
