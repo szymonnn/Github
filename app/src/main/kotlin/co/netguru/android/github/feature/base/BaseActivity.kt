@@ -5,19 +5,18 @@ import android.support.test.espresso.idling.CountingIdlingResource
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
-import javax.inject.Inject
 
 abstract class BaseActivity<V : MvpView?, P : MvpPresenter<V>?> : MvpActivity<V, P>(), BaseView {
 
-    @Inject
-    lateinit var idlingResource: CountingIdlingResource
+    @JvmField
+    var idling: CountingIdlingResource? = CountingIdlingResource("IDLING")
 
     @CallSuper
     override fun progressBarVisibility(visible: Boolean) {
         if (visible) {
-            idlingResource.increment()
+            idling?.increment()
         } else {
-            idlingResource.decrement()
+            idling?.decrement()
         }
     }
 
@@ -28,4 +27,5 @@ abstract class BaseActivity<V : MvpView?, P : MvpPresenter<V>?> : MvpActivity<V,
     override fun showMessage(res: Int) {
         showMessage(getString(res))
     }
+
 }

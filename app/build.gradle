@@ -213,4 +213,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
     implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
+
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
+        // Necessary to avoid version conflicts
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }

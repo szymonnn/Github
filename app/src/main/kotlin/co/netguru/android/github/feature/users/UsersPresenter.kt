@@ -33,8 +33,8 @@ class UsersPresenter(val usersApi: UsersApi) : BasePresenter<UsersContract.View>
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ users ->
                     ifViewAttached { view ->
-                        view.progressBarVisibility(false)
                         view.onSearchComplete(users)
+                        view.progressBarVisibility(false)
                     }
                 }, {
                     ifViewAttached { view ->
